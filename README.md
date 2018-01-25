@@ -30,9 +30,10 @@ import (
 	"github.com/maurodelazeri/go-talib"
 )
 
+// Standard Deviation
 func main() {
 	x := []float64{22.2,22.33,21.22,23.22,21.00}
-	fmt.Println(talib.Max(x, 5))
-	[0 0 0 0 23.22]
+        fmt.Println(talib.StdDev(x, 5, 2))
+	[0 0 0 0 1.611339815184824]
 }
 ```
