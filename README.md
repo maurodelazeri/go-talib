@@ -27,12 +27,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/maurodelazeri/go-quote"
 	"github.com/maurodelazeri/go-talib"
 )
 
 func main() {
 	x := []float64{22.2,22.33,21.22,23.22,21.00}
 	fmt.Println(talib.Max(x, 5))
+	[0 0 0 0 23.22]
 }
 ```
