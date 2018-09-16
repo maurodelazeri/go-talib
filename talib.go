@@ -5114,15 +5114,22 @@ func LinearReg(inReal []float64, inTimePeriod int) []float64 {
 	sumX := inTimePeriodF * (inTimePeriodF - 1) * 0.5
 	sumXSqr := inTimePeriodF * (inTimePeriodF - 1) * (2*inTimePeriodF - 1) / 6
 	divisor := sumX*sumX - inTimePeriodF*sumXSqr
+	//initialize values of sumY and sumXY over first (inTimePeriod) input values
+	sumXY := 0.0
+	sumY := 0.0
+	i := inTimePeriod
+	for i != 0 {
+		i--
+		tempValue1 := inReal[today-i]
+		sumY += tempValue1
+		sumXY += float64(i) * tempValue1
+	}
 	for today < len(inReal) {
-		sumXY := 0.0
-		sumY := 0.0
-		i := inTimePeriod
-		for i != 0 {
-			i--
-			tempValue1 := inReal[today-i]
-			sumY += tempValue1
-			sumXY += float64(i) * tempValue1
+		//sumX and sumXY are already available for first output value
+		if today > startIdx-1 {
+			tempValue2 := inReal[today-inTimePeriod]
+			sumXY += sumY - inTimePeriodF*tempValue2
+			sumY += inReal[today] - tempValue2
 		}
 		m := (inTimePeriodF*sumXY - sumX*sumY) / divisor
 		b := (sumY - m*sumX) / inTimePeriodF
@@ -5146,18 +5153,25 @@ func LinearRegAngle(inReal []float64, inTimePeriod int) []float64 {
 	sumX := inTimePeriodF * (inTimePeriodF - 1) * 0.5
 	sumXSqr := inTimePeriodF * (inTimePeriodF - 1) * (2*inTimePeriodF - 1) / 6
 	divisor := sumX*sumX - inTimePeriodF*sumXSqr
+	//initialize values of sumY and sumXY over first (inTimePeriod) input values
+	sumXY := 0.0
+	sumY := 0.0
+	i := inTimePeriod
+	for i != 0 {
+		i--
+		tempValue1 := inReal[today-i]
+		sumY += tempValue1
+		sumXY += float64(i) * tempValue1
+	}
 	for today < len(inReal) {
-		sumXY := 0.0
-		sumY := 0.0
-		i := inTimePeriod
-		for i != 0 {
-			i--
-			tempValue1 := inReal[today-i]
-			sumY += tempValue1
-			sumXY += float64(i) * tempValue1
+		//sumX and sumXY are already available for first output value
+		if today > startIdx-1 {
+			tempValue2 := inReal[today-inTimePeriod]
+			sumXY += sumY - inTimePeriodF*tempValue2
+			sumY += inReal[today] - tempValue2
 		}
 		m := (inTimePeriodF*sumXY - sumX*sumY) / divisor
-		outReal[outIdx] = math.Atan(m) * (180.0 / 3.14159265358979323846)
+		outReal[outIdx] = math.Atan(m) * (180.0 / math.Pi)
 		outIdx++
 		today++
 	}
@@ -5177,15 +5191,22 @@ func LinearRegIntercept(inReal []float64, inTimePeriod int) []float64 {
 	sumX := inTimePeriodF * (inTimePeriodF - 1) * 0.5
 	sumXSqr := inTimePeriodF * (inTimePeriodF - 1) * (2*inTimePeriodF - 1) / 6
 	divisor := sumX*sumX - inTimePeriodF*sumXSqr
+	//initialize values of sumY and sumXY over first (inTimePeriod) input values
+	sumXY := 0.0
+	sumY := 0.0
+	i := inTimePeriod
+	for i != 0 {
+		i--
+		tempValue1 := inReal[today-i]
+		sumY += tempValue1
+		sumXY += float64(i) * tempValue1
+	}
 	for today < len(inReal) {
-		sumXY := 0.0
-		sumY := 0.0
-		i := inTimePeriod
-		for i != 0 {
-			i--
-			tempValue1 := inReal[today-i]
-			sumY += tempValue1
-			sumXY += float64(i) * tempValue1
+		//sumX and sumXY are already available for first output value
+		if today > startIdx-1 {
+			tempValue2 := inReal[today-inTimePeriod]
+			sumXY += sumY - inTimePeriodF*tempValue2
+			sumY += inReal[today] - tempValue2
 		}
 		m := (inTimePeriodF*sumXY - sumX*sumY) / divisor
 		outReal[outIdx] = (sumY - m*sumX) / inTimePeriodF
@@ -5208,15 +5229,22 @@ func LinearRegSlope(inReal []float64, inTimePeriod int) []float64 {
 	sumX := inTimePeriodF * (inTimePeriodF - 1) * 0.5
 	sumXSqr := inTimePeriodF * (inTimePeriodF - 1) * (2*inTimePeriodF - 1) / 6
 	divisor := sumX*sumX - inTimePeriodF*sumXSqr
+	//initialize values of sumY and sumXY over first (inTimePeriod) input values
+	sumXY := 0.0
+	sumY := 0.0
+	i := inTimePeriod
+	for i != 0 {
+		i--
+		tempValue1 := inReal[today-i]
+		sumY += tempValue1
+		sumXY += float64(i) * tempValue1
+	}
 	for today < len(inReal) {
-		sumXY := 0.0
-		sumY := 0.0
-		i := inTimePeriod
-		for i != 0 {
-			i--
-			tempValue1 := inReal[today-i]
-			sumY += tempValue1
-			sumXY += float64(i) * tempValue1
+		//sumX and sumXY are already available for first output value
+		if today > startIdx-1 {
+			tempValue2 := inReal[today-inTimePeriod]
+			sumXY += sumY - inTimePeriodF*tempValue2
+			sumY += inReal[today] - tempValue2
 		}
 		outReal[outIdx] = (inTimePeriodF*sumXY - sumX*sumY) / divisor
 		outIdx++
@@ -5265,15 +5293,22 @@ func Tsf(inReal []float64, inTimePeriod int) []float64 {
 	sumX := inTimePeriodF * (inTimePeriodF - 1.0) * 0.5
 	sumXSqr := inTimePeriodF * (inTimePeriodF - 1) * (2*inTimePeriodF - 1) / 6
 	divisor := sumX*sumX - inTimePeriodF*sumXSqr
+	//initialize values of sumY and sumXY over first (inTimePeriod) input values
+	sumXY := 0.0
+	sumY := 0.0
+	i := inTimePeriod
+	for i != 0 {
+		i--
+		tempValue1 := inReal[today-i]
+		sumY += tempValue1
+		sumXY += float64(i) * tempValue1
+	}
 	for today < len(inReal) {
-		sumXY := 0.0
-		sumY := 0.0
-		i := inTimePeriod
-		for i != 0 {
-			i--
-			tempValue1 := inReal[today-i]
-			sumY += tempValue1
-			sumXY += float64(i) * tempValue1
+		//sumX and sumXY are already available for first output value
+		if today > startIdx-1 {
+			tempValue2 := inReal[today-inTimePeriod]
+			sumXY += sumY - inTimePeriodF*tempValue2
+			sumY += inReal[today] - tempValue2
 		}
 		m := (inTimePeriodF*sumXY - sumX*sumY) / divisor
 		b := (sumY - m*sumX) / inTimePeriodF
@@ -5824,4 +5859,74 @@ func Sum(inReal []float64, inTimePeriod int) []float64 {
 	}
 
 	return outReal
+}
+
+// HeikinashiCandles - from candle values extracts heikinashi candle values.
+//
+// Returns highs, opens, closes and lows of the heikinashi candles (in this order).
+//
+//    NOTE: The number of Heikin-Ashi candles will always be one less than the number of provided candles, due to the fact
+//          that a previous candle is necessary to calculate the Heikin-Ashi candle, therefore the first provided candle is not considered
+//          as "current candle" in the algorithm, but only as "previous candle".
+func HeikinashiCandles(highs []float64, opens []float64, closes []float64, lows []float64) ([]float64, []float64, []float64, []float64) {
+	N := len(highs)
+
+	heikinHighs := make([]float64, N-1)
+	heikinOpens := make([]float64, N-1)
+	heikinCloses := make([]float64, N-1)
+	heikinLows := make([]float64, N-1)
+
+	heikinCurrent := 0
+	for currentCandle := 1; currentCandle < N; currentCandle++ {
+		previousCandle := currentCandle - 1
+
+		heikinHighs[heikinCurrent] = math.Max(highs[currentCandle], math.Max(opens[currentCandle], closes[currentCandle]))
+		heikinOpens[heikinCurrent] = (opens[previousCandle] + closes[previousCandle]) / 2
+		heikinCloses[heikinCurrent] = (highs[currentCandle] + opens[currentCandle] + closes[currentCandle] + lows[currentCandle]) / 4
+		heikinLows[heikinCurrent] = math.Min(highs[currentCandle], math.Min(opens[currentCandle], closes[currentCandle]))
+
+		heikinCurrent++
+	}
+
+	return heikinHighs, heikinOpens, heikinCloses, heikinLows
+}
+
+// Hlc3 returns the Hlc3 values
+//
+//     NOTE: Every Hlc item is defined as follows : (high + low + close) / 3
+//           It is used as AvgPrice candle.
+func Hlc3(highs []float64, lows []float64, closes []float64) []float64 {
+	N := len(highs)
+	result := make([]float64, N)
+	for i := range highs {
+		result[i] = (highs[i] + lows[i] + closes[i]) / 3
+	}
+
+	return result
+}
+
+// Crossover returns true if series1 is crossing over series2.
+//
+//    NOTE: Usually this is used with Media Average Series to check if it crosses for buy signals.
+//          It assumes first values are the most recent.
+//          The crossover function does not use most recent value, since usually it's not a complete candle.
+//          The second recent values and the previous are used, instead.
+func Crossover(series1 []float64, series2 []float64) bool {
+	if len(series1) < 3 || len(series2) < 3 {
+		return false
+	}
+	return series1[2] >= series2[2] && series1[1] <= series2[1]
+}
+
+// Crossunder returns true if series1 is crossing under series2.
+//
+//    NOTE: Usually this is used with Media Average Series to check if it crosses for sell signals.
+//          It assumes first values are the most recent.
+//          The crossunder function does not use most recent value, since usually it's not a complete candle.
+//          The second recent values and the previous are used, instead.
+func Crossunder(series1 []float64, series2 []float64) bool {
+	if len(series1) < 3 || len(series2) < 3 {
+		return false
+	}
+	return series1[1] >= series2[1] && series1[2] <= series2[2]
 }
